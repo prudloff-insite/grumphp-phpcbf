@@ -1,0 +1,19 @@
+{
+  "name": "insite/grumphp-phpcbf",
+  "license": "proprietary",
+  "description": "phpcbf task for GrumPHP",
+  "require": {
+    "phpro/grumphp": "^0.16.2"
+  },
+  "config": {
+    "platform": {
+      "php": "7.1"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "GrumphpPhpcbf\\": "src/"
+    }
+  }
+}
+
