@@ -11,16 +11,23 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package GrumphpPhpcbf
  */
-class Loader implements ExtensionInterface {
+class Loader implements ExtensionInterface
+{
 
-  /**
-   * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-   */
-  public function load(ContainerBuilder $container) {
-    $container->register('task.phpcbf', Phpcbf::class)
-      ->addArgument(new Reference('config'))
-      ->addArgument(new Reference('process_builder'))
-      ->addArgument(new Reference('formatter.phpcsfixer'))
-      ->addTag('grumphp.task', ['config' => 'phpcbf']);
-  }
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function load(ContainerBuilder $container)
+    {
+        $container->register('task.phpcbf', Phpcbf::class)
+            ->addArgument(new Reference('config'))
+            ->addArgument(new Reference('process_builder'))
+            ->addArgument(new Reference('formatter.raw_process'))
+            ->addTag('grumphp.task', ['config' => 'phpcbf']);
+        $container->register('task.git_add', GitAdd::class)
+            ->addArgument(new Reference('config'))
+            ->addArgument(new Reference('process_builder'))
+            ->addArgument(new Reference('formatter.raw_process'))
+            ->addTag('grumphp.task', ['config' => 'git_add']);
+    }
 }

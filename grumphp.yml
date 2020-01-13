@@ -1,0 +1,17 @@
+---
+parameters:
+  extensions:
+    - GrumphpPhpcbf\Loader
+  ascii: ~
+  tasks:
+    phpcbf:
+      standard: PSR2
+      metadata:
+        # So it runs before phpcs.
+        priority: 100
+    # We need to re-add the files phpcbf modified.
+    git_add:
+      metadata:
+        priority: 90
+    phpcs:
+      standard: PSR2

@@ -5,16 +5,18 @@ namespace GrumphpPhpcbf;
 use GrumPHP\Collection\FilesCollection;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
+use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
-use GrumPHP\Task\Phpcs;
+use GrumPHP\Task\Context\GitPreCommitContext;
+use GrumPHP\Task\Context\RunContext;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use function count;
 
 /**
- * Class Phpcbf
- *
+ * Class GitAdd
  * @package GrumphpPhpcbf
  */
-class Phpcbf extends Phpcs
+class GitAdd extends AbstractExternalTask
 {
 
     /**
@@ -22,7 +24,7 @@ class Phpcbf extends Phpcs
      */
     public function getName(): string
     {
-        return 'phpcbf';
+        return 'git_add';
     }
 
     /**
@@ -32,28 +34,16 @@ class Phpcbf extends Phpcs
      */
     public function run(ContextInterface $context): TaskResultInterface
     {
-        /** @var array $config */
-        $config = $this->getConfiguration();
-
-        /** @var array $whitelistPatterns */
-        $whitelistPatterns = $config['whitelist_patterns'];
-
-        /** @var array $extensions */
-        $extensions = $config['triggered_by'];
-
         /** @var FilesCollection $files */
         $files = $context->getFiles();
-        if (count($whitelistPatterns)) {
-            $files = $files->paths($whitelistPatterns);
-        }
-        $files = $files->extensions($extensions);
 
         if (0 === count($files)) {
             return TaskResult::createSkipped($this, $context);
         }
 
-        $arguments = $this->processBuilder->createArgumentsForCommand('phpcbf');
-        $arguments = $this->addArgumentsFromConfig($arguments, $config);
+        $arguments = $this->processBuilder->createArgumentsForCommand('git');
+        $arguments->add('add');
+        $arguments->add('-f');
         $arguments->addFiles($files);
 
         $process = $this->processBuilder->buildProcess($arguments);
@@ -62,9 +52,19 @@ class Phpcbf extends Phpcs
         if (!$process->isSuccessful()) {
             $output = $this->formatter->format($process);
 
-            return TaskResult::createNonBlockingFailed($this, $context, $output);
+            return TaskResult::createFailed($this, $context, $output);
         }
 
         return TaskResult::createPassed($this, $context);
+    }
+
+    public function getConfigurableOptions(): OptionsResolver
+    {
+        return new OptionsResolver();
+    }
+
+    public function canRunInContext(ContextInterface $context): bool
+    {
+        return $context instanceof GitPreCommitContext || $context instanceof RunContext;
     }
 }
