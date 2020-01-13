@@ -3,11 +3,11 @@
   "license": "proprietary",
   "description": "phpcbf task for GrumPHP",
   "require": {
-    "phpro/grumphp": "^0.16.2"
+    "phpro/grumphp": "^0.14.3"
   },
   "config": {
     "platform": {
-      "php": "7.1"
+      "php": "5.6"
     }
   },
   "autoload": {
@@ -16,4 +16,3 @@
     }
   }
 }
-

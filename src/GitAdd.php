@@ -22,7 +22,7 @@ class GitAdd extends AbstractExternalTask
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return 'git_add';
     }
@@ -32,7 +32,7 @@ class GitAdd extends AbstractExternalTask
      *
      * @return TaskResultInterface
      */
-    public function run(ContextInterface $context): TaskResultInterface
+    public function run(ContextInterface $context)
     {
         /** @var FilesCollection $files */
         $files = $context->getFiles();
@@ -58,12 +58,12 @@ class GitAdd extends AbstractExternalTask
         return TaskResult::createPassed($this, $context);
     }
 
-    public function getConfigurableOptions(): OptionsResolver
+    public function getConfigurableOptions()
     {
         return new OptionsResolver();
     }
 
-    public function canRunInContext(ContextInterface $context): bool
+    public function canRunInContext(ContextInterface $context)
     {
         return $context instanceof GitPreCommitContext || $context instanceof RunContext;
     }

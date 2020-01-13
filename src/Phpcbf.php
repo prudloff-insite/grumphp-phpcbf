@@ -20,7 +20,7 @@ class Phpcbf extends Phpcs
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return 'phpcbf';
     }
@@ -30,7 +30,7 @@ class Phpcbf extends Phpcs
      *
      * @return TaskResultInterface
      */
-    public function run(ContextInterface $context): TaskResultInterface
+    public function run(ContextInterface $context)
     {
         /** @var array $config */
         $config = $this->getConfiguration();
