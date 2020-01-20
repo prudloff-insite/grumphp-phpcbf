@@ -58,11 +58,18 @@ class GitAdd extends AbstractExternalTask
         return TaskResult::createPassed($this, $context);
     }
 
+    /**
+     * @return OptionsResolver
+     */
     public function getConfigurableOptions(): OptionsResolver
     {
         return new OptionsResolver();
     }
 
+    /**
+     * @param ContextInterface $context
+     * @return bool
+     */
     public function canRunInContext(ContextInterface $context): bool
     {
         return $context instanceof GitPreCommitContext || $context instanceof RunContext;
