@@ -17,5 +17,8 @@
   },
   "scripts": {
     "lint": "grumphp run --ansi"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^3.4"
   }
 }
