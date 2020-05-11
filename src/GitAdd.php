@@ -33,7 +33,13 @@ class GitAdd extends AbstractExternalTask
      */
     public function run(ContextInterface $context): TaskResultInterface
     {
+        $config = $this->getConfiguration();
+
+        /** @var array $extensions */
+        $extensions = $config['triggered_by'];
+
         $files = $context->getFiles();
+        $files = $files->extensions($extensions);
 
         if (0 === count($files)) {
             return TaskResult::createSkipped($this, $context);
@@ -61,7 +67,13 @@ class GitAdd extends AbstractExternalTask
      */
     public function getConfigurableOptions(): OptionsResolver
     {
-        return new OptionsResolver();
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'triggered_by' => [],
+        ]);
+        $resolver->addAllowedTypes('triggered_by', ['array']);
+
+        return $resolver;
     }
 
     /**
