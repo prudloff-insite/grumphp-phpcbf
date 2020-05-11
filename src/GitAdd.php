@@ -2,7 +2,6 @@
 
 namespace GrumphpPhpcbf;
 
-use GrumPHP\Collection\FilesCollection;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
@@ -34,7 +33,6 @@ class GitAdd extends AbstractExternalTask
      */
     public function run(ContextInterface $context): TaskResultInterface
     {
-        /** @var FilesCollection $files */
         $files = $context->getFiles();
 
         if (0 === count($files)) {

@@ -2,7 +2,6 @@
 
 namespace GrumphpPhpcbf;
 
-use GrumPHP\Collection\FilesCollection;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\Context\ContextInterface;
@@ -32,7 +31,6 @@ class Phpcbf extends Phpcs
      */
     public function run(ContextInterface $context): TaskResultInterface
     {
-        /** @var array $config */
         $config = $this->getConfiguration();
 
         /** @var array $whitelistPatterns */
@@ -41,7 +39,6 @@ class Phpcbf extends Phpcs
         /** @var array $extensions */
         $extensions = $config['triggered_by'];
 
-        /** @var FilesCollection $files */
         $files = $context->getFiles();
         if (count($whitelistPatterns)) {
             $files = $files->paths($whitelistPatterns);
