@@ -14,5 +14,8 @@
     "psr-4": {
       "GrumphpPhpcbf\\": "src/"
     }
+  },
+  "scripts": {
+    "lint": "grumphp run --ansi"
   }
 }
