@@ -1,6 +1,6 @@
 {
   "name": "insite/grumphp-phpcbf",
-  "license": "proprietary",
+  "license": "GPL-2.0-or-later",
   "description": "phpcbf task for GrumPHP",
   "require": {
     "phpro/grumphp": "~0.16"
